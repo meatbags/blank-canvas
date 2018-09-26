@@ -19,14 +19,12 @@ class Scene {
   }
 
   resize() {
-    const rect = this.element.getBoundingClientRect();
-    this.width = rect.width;
-    this.height = rect.height;
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
     this.camera.resize();
   }
 
   update(delta) {
-    this.player.update(delta);
     this.camera.update(delta);
     this.map.update(delta);
   }

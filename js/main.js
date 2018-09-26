@@ -10,29 +10,37 @@ class App {
     this.renderer = new Renderer(this.scene);
     this.recordButton = document.querySelector('#record');
     this.recordButton.onclick = () => { this.record(); };
+    this.now = performance.now();
     this.loop();
   }
 
   record() {
     if (!this.recordButton.classList.contains('active')) {
+      this.capturer = new CCapture({framerate: 24, motionBlurFrames: true, format: 'png'}); //verbose: true
+      this.capturer.start();
+      this.recording = true;
       this.recordButton.classList.add('active');
-      // start
     } else {
+      this.recording = false;
+      this.capturer.stop();
+      this.capturer.save();
       this.recordButton.classList.remove('active');
-      // stop, save
     }
   }
 
   loop() {
     requestAnimationFrame(() => { this.loop(); });
-    if (this.active) {
-      const t = performance.now();
-      const delta = (t - this.now) / 1000;
-      this.now = t;
-      this.scene.update(delta);
-      this.surface.update(delta);
-      this.renderer.draw(delta);
-      this.surface.draw();
+
+    // render
+    const t = performance.now();
+    const delta = (t - this.now) / 1000;
+    this.now = t;
+    this.scene.update(delta);
+    this.renderer.draw(delta);
+
+    // record video
+    if (this.recording) {
+      this.capturer.capture(this.renderer.renderer.domElement);
     }
   }
 }

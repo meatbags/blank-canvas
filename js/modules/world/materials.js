@@ -36,7 +36,7 @@ class Materials {
 
     // mat specific
     mat.envMap = this.envMap;
-    mat.envMapIntensity = 0.5;
+    mat.envMapIntensity = 1.0;
 
     switch (mat.name) {
       case 'concrete':

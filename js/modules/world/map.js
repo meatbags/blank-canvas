@@ -9,41 +9,17 @@ class Map {
   constructor(root) {
     this.root = root;
     this.scene = root.scene;
-    this.colliderSystem = root.colliderSystem;
     this.materials = new Materials('assets');
     this.loader = new Loader('assets');
     this.loadScene();
   }
 
   loadScene() {
-    // invisible floor
-    this.floor = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 1, 100), new THREE.MeshPhongMaterial({}));
-    this.floor.position.y = -0.25;
-
-    // onloads
-    this.toLoad = 2;
-    this.checkLoaded = () => {
-      this.toLoad -= 1;
-      if (this.toLoad == 0) {
-        const target = document.querySelector('#open-gallery');
-        target.classList.remove('is-loading');
-        target.classList.add('flash');
-        target.innerHTML = 'Open Gallery';
-      }
-    };
-
     // main maps
     this.loader.loadFBX('map').then((map) => {
       this.scene.add(map);
       this.conformGroups(map);
-      this.checkLoaded();
     }, (err) => { console.log(err); });
-
-    // peripherals
-    this.loader.loadFBX('props').then((map) => {
-      this.scene.add(map);
-      this.conformGroups(map);
-    });
 
     //const mat = this.materials.getCustomMaterial('warp');
     /*

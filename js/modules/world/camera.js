@@ -5,7 +5,8 @@
 class Camera {
   constructor(root) {
     this.root = root;
-    this.position = new THREE.Vector3(10, 10, 10);
+    this.angle = 0;
+    this.distance = 3;
     this.target = new THREE.Vector3();
     this.fov = 65;
     this.aspectRatio = this.root.width / this.root.height;
@@ -21,6 +22,11 @@ class Camera {
   }
 
   update(delta) {
+    this.angle += delta * Math.PI * 0.0625;
+    const x = Math.cos(this.angle) * this.distance;
+    const y = Math.sin(this.angle) * this.distance / 2;
+    const z = Math.sin(this.angle) * this.distance;
+    this.camera.position.set(x, y, z);
     this.camera.lookAt(this.target);
   }
 }

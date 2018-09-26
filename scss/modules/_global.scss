@@ -7,7 +7,9 @@ body {
 	font-family: $fontStack;
 	font-size: $fontSize;
 	color: $colourPrimary;
-	background: $colourBackground;
+	background-color: $colourBackground;
+	background-image: linear-gradient(to right, $colourGrid 1px, transparent 1px), linear-gradient(to bottom, $colourGrid 1px, transparent 1px);
+	background-size: $gridSize $gridSize;
 	overflow-x: hidden;
 }
 
@@ -18,6 +20,7 @@ body {
 	padding: $space;
 	user-select: none;
 	cursor: pointer;
+	background: black;
 
 	&:hover {
 		opacity: 0.5;

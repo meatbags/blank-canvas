@@ -8,8 +8,8 @@ class Renderer {
   constructor(scene) {
     this.scene = scene.scene;
     this.camera = scene.camera.camera;
-    this.renderer = new THREE.WebGLRenderer({});
-    this.renderer.setClearColor(0x444444, 1);
+    this.renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
+    this.renderer.setClearColor(0x0, 0);
     this.renderer.gammaInput = true;
     this.renderer.gammaOutput = true;
     this.setSize();
@@ -19,13 +19,14 @@ class Renderer {
     const radius = 0.125;
     const threshold = 0.96;
     this.passRender = new THREE.RenderPass(this.scene, this.camera);
-    this.passPoster = new THREE.PosterPass(this.size);
-    this.passBloom = new THREE.UnrealBloomPass(this.size, strength, radius, threshold);
-    this.passBloom.renderToScreen = true;
+    //this.passPoster = new THREE.PosterPass(this.size);
+    //this.passBloom = new THREE.UnrealBloomPass(this.size, strength, radius, threshold);
+    //this.passBloom.renderToScreen = true;
     this.composer = new THREE.EffectComposer(this.renderer);
     this.composer.addPass(this.passRender);
-    this.composer.addPass(this.passPoster);
-    this.composer.addPass(this.passBloom);
+    this.passRender.renderToScreen = true;
+    //this.composer.addPass(this.passPoster);
+    //this.composer.addPass(this.passBloom);
 
     // events, doc
     window.addEventListener('resize', () => { this.resize(); });
@@ -50,7 +51,7 @@ class Renderer {
     this.setSize();
     this.renderer.setSize(this.width, this.height);
     this.composer.setSize(this.width, this.height);
-    this.passBloom.setSize(this.width, this.height);
+    //this.passBloom.setSize(this.width, this.height);
   }
 
   draw(delta) {
