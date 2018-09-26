@@ -6,7 +6,7 @@ import '../../lib/loaders';
 
 class Loader {
   constructor(path) {
-    this.path = `${APP_ROOT}/${path}/`;
+    this.path = `./${path}/`;
     this.materials = {};
     this.images = {};
     this.loaderFBX = new THREE.FBXLoader();

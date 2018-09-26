@@ -10,3 +10,28 @@ body {
 	background: $colourBackground;
 	overflow-x: hidden;
 }
+
+#record {
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: $space;
+	user-select: none;
+	cursor: pointer;
+
+	&:hover {
+		opacity: 0.5;
+	}
+
+	&.active {
+		opacity: 0.25;
+	}
+}
+
+canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+}

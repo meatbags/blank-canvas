@@ -4,7 +4,7 @@
 
 class Materials {
   constructor(path) {
-    this.path = `${APP_ROOT}/${path}/`;
+    this.path = `./${path}/`;
     this.mat = {};
     this.mat.default = new THREE.MeshPhysicalMaterial({emissive: 0, roughness: 1, envMapIntensity: 0.25});
     this.mat.porcelain = new THREE.MeshPhysicalMaterial({color: 0xffffff, emissive: 0x888888, emissiveIntensity: 0.6, roughness: 0.55, metalness: 0.125, envMapIntensity: 0.5});
@@ -14,7 +14,7 @@ class Materials {
     this.normalMap = new THREE.TextureLoader().load(this.path + 'textures/noise.jpg');
     this.normalMap.wrapS = this.normalMap.wrapT = THREE.RepeatWrapping;
     this.normalMap.repeat.set(32, 32);
-    
+
     // set envmaps
     Object.keys(this.mat).forEach(key => {
       if (this.mat[key].type && this.mat[key].type === 'MeshPhysicalMaterial') {

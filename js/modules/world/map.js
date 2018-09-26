@@ -19,7 +19,6 @@ class Map {
     // invisible floor
     this.floor = new THREE.Mesh(new THREE.BoxBufferGeometry(100, 1, 100), new THREE.MeshPhongMaterial({}));
     this.floor.position.y = -0.25;
-    this.colliderSystem.add(this.floor);
 
     // onloads
     this.toLoad = 2;
@@ -37,11 +36,6 @@ class Map {
     this.loader.loadFBX('map').then((map) => {
       this.scene.add(map);
       this.conformGroups(map);
-      this.checkLoaded();
-    }, (err) => { console.log(err); });
-
-    this.loader.loadOBJ('collision').then((map) => {
-      this.addCollisionMap(map);
       this.checkLoaded();
     }, (err) => { console.log(err); });
 
@@ -63,15 +57,6 @@ class Map {
       this.group.push(mesh);
     }
     */
-  }
-
-  addCollisionMap(obj) {
-    // recursively add object group to collider
-    if (obj.type === 'Mesh') {
-      this.colliderSystem.add(obj);
-    } else if (obj.children && obj.children.length) {
-      obj.children.forEach(child => { this.addCollisionMap(child); });
-    }
   }
 
   conformGroups(obj) {

@@ -55,3 +55,25 @@ body {
   background: #4c474b;
   overflow-x: hidden; }
 
+#record {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 8px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer; }
+  #record:hover {
+    opacity: 0.5; }
+  #record.active {
+    opacity: 0.25; }
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0; }
+

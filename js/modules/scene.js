@@ -2,7 +2,7 @@
  * 3D scene handler.
  **/
 
-import { Camera, Lighting, Player, Map } from './world';
+import { Camera, Lighting, Map } from './world';
 
 class Scene {
   constructor() {
@@ -10,7 +10,6 @@ class Scene {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.scene = new THREE.Scene();
-    this.colliderSystem = new Collider.System();
     this.camera = new Camera(this);
     this.lighting = new Lighting(this);
     this.map = new Map(this);
