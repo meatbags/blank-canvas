@@ -11,7 +11,6 @@ class Scene {
     this.height = window.innerHeight;
     this.scene = new THREE.Scene();
     this.colliderSystem = new Collider.System();
-    this.player = new Player(this);
     this.camera = new Camera(this);
     this.lighting = new Lighting(this);
     this.map = new Map(this);

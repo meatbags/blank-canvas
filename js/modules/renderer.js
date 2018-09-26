@@ -27,7 +27,7 @@ class Renderer {
     this.composer.addPass(this.passRender);
     this.composer.addPass(this.passPoster);
     this.composer.addPass(this.passBloom);
-
+    
     // events, doc
     window.addEventListener('resize', () => { this.resize(); });
     this.domElement = document.querySelector('#canvas-target');
