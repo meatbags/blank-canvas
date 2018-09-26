@@ -32,9 +32,9 @@ class Lighting {
     this.lights.hemisphere.a = new THREE.HemisphereLight(0x0, 0x0000ff, 0.25);
 
     // light placement
-    this.lights.point.a.position.set(-8, 10, 22);
-    this.lights.point.b.position.set(0, 10, -4);
-    this.lights.point.c.position.set(26, 10, 6);
+    this.lights.point.a.position.set(-8, 5, 10);
+    this.lights.point.b.position.set(0, 5, -4);
+    this.lights.point.c.position.set(10, 5, 6);
     this.lights.directional.a.position.set(-1, 1.5, -1);
 
     // add to scene

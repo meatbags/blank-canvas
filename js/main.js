@@ -16,7 +16,7 @@ class App {
 
   record() {
     if (!this.recordButton.classList.contains('active')) {
-      this.capturer = new CCapture({framerate: 24, motionBlurFrames: true, format: 'png'}); //verbose: true
+      this.capturer = new CCapture({framerate: 48, format: 'png'}); //verbose: true, motionBlurFrames: true
       this.capturer.start();
       this.recording = true;
       this.recordButton.classList.add('active');
