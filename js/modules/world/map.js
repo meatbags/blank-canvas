@@ -19,8 +19,7 @@ class Map {
     this.group = new THREE.Group();
     const conform = (obj) => {
       if (obj.type === 'Mesh') {
-        //this.materials.conform(obj.material);
-        obj.material = this.materials.getCustomMaterial(1);
+        obj.material = this.materials.getCustomMaterial(1, obj.material);
       } else if (obj.children && obj.children.length) {
         obj.children.forEach(child => { conform(child); });
       }

@@ -19,7 +19,7 @@ class Materials {
     this.normalMap.wrapS = this.normalMap.wrapT = THREE.RepeatWrapping;
     this.normalMap.repeat.set(32, 32);
 
-    this.mat.metal.map = this.normalMap;
+    //this.mat.metal.map = this.normalMap;
 
     // set envmaps
     Object.keys(this.mat).forEach(key => {
@@ -35,9 +35,9 @@ class Materials {
     this.loaded = {};
   }
 
-  getCustomMaterial(type) {
+  getCustomMaterial(type, inputMat) {
     if (type === undefined || type == 1) {
-      const mat = this.mat.metal.clone();
+      const mat = (inputMat === undefined) ? this.mat.metal.clone() : inputMat.clone();
       mat.onBeforeCompile = (shader) => {
         shader.vertexShader = `uniform float time;\n${shader.vertexShader}`;
         shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', customMat.metalMat);
