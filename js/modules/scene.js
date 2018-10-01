@@ -18,6 +18,10 @@ class Scene {
     window.addEventListener('resize', () => { this.resize(); });
   }
 
+  reset() {
+    this.map.materials.reset();
+  }
+
   resize() {
     this.width = window.innerWidth;
     this.height = window.innerHeight;

@@ -10,32 +10,35 @@ class Lighting {
 
     // skybox
     /*
-      this.sky = new THREE.Sky();
-      this.sky.scale.setScalar(450000);
-      const d = 400000;
-      const azimuth = 0.25;
-      const inclination = 0.4875;
-      const theta = Math.PI * (inclination - 0.5);
-      const phi = Math.PI * 2 * (azimuth - 0.5);
-      const sunPos = new THREE.Vector3(d * Math.cos(phi), d * Math.sin(phi) * Math.sin(theta), d * Math.sin(phi) * Math.cos(theta));
-      this.sky.material.uniforms.sunPosition.value.copy(sunPos);
-      this.scene.add(this.sky);
+    this.sky = new THREE.Sky();
+    this.sky.scale.setScalar(450000);
+    const d = 400000;
+    const azimuth = 0.25;
+    const inclination = 0.4875;
+    const theta = Math.PI * (inclination - 0.5);
+    const phi = Math.PI * 2 * (azimuth - 0.5);
+    const sunPos = new THREE.Vector3(d * Math.cos(phi), d * Math.sin(phi) * Math.sin(theta), d * Math.sin(phi) * Math.cos(theta));
+    this.sky.material.uniforms.sunPosition.value.copy(sunPos);
+    this.scene.add(this.sky);
     */
 
     // lighting
     this.lights = {point: {}, ambient: {}, directional: {}, hemisphere: {}};
-    this.lights.point.a = new THREE.PointLight(0xff0000, 1, 20, 2);
-    this.lights.point.b = new THREE.PointLight(0xffffff, 1, 32, 2);
-    this.lights.point.c = new THREE.PointLight(0xffffff, 1, 20, 2);
-    this.lights.ambient.a = new THREE.AmbientLight(0xffffff, 0.3);
-    this.lights.directional.a = new THREE.DirectionalLight(0xffffff, 0.5);
-    this.lights.hemisphere.a = new THREE.HemisphereLight(0x0, 0x0000ff, 0.25);
+    //this.lights.ambient.a = new THREE.AmbientLight(0xffffff, 0.125);
+    this.lights.hemisphere.a = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.75);
 
-    // light placement
-    this.lights.point.a.position.set(-8, 5, 10);
-    this.lights.point.b.position.set(0, 5, -4);
-    this.lights.point.c.position.set(10, 5, 6);
-    this.lights.directional.a.position.set(-1, 1.5, -1);
+    const size = 10;
+    const n = 0;
+    for (var i=0; i<n; i++) {
+      const key = `L${i}`;
+      const colour = Math.random() > 0.66 ? 0xff0000 : Math.random() > 0.5 ? 0x00ff00 : 0x0000ff;
+      const light = new THREE.PointLight(colour, 1, size * 2, 2);
+      const x = Math.random() * size - size * 0.5;
+      const y = Math.random() * size - size * 0.5;
+      const z = Math.random() * size - size * 0.5;
+      light.position.set(x, y, z);
+      this.lights.point[key] = light;
+    }
 
     // add to scene
     Object.keys(this.lights).forEach(type => {

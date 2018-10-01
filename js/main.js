@@ -9,6 +9,8 @@ class App {
     this.scene = new Scene();
     this.renderer = new Renderer(this.scene);
     this.recordButton = document.querySelector('#record');
+    this.frameRate = 48;
+    this.framesRecordedTarget = document.querySelector('#frames');
     this.recordButton.onclick = () => { this.record(); };
     this.now = performance.now();
     this.loop();
@@ -16,7 +18,9 @@ class App {
 
   record() {
     if (!this.recordButton.classList.contains('active')) {
-      this.capturer = new CCapture({framerate: 48, format: 'png'}); //verbose: true, motionBlurFrames: true
+      this.scene.reset();
+      this.framesRecorded = 0;
+      this.capturer = new CCapture({framerate: this.frameRate, format: 'png'}); //verbose: true, motionBlurFrames: true
       this.capturer.start();
       this.recording = true;
       this.recordButton.classList.add('active');
@@ -41,6 +45,9 @@ class App {
     // record video
     if (this.recording) {
       this.capturer.capture(this.renderer.renderer.domElement);
+      this.framesRecorded += 1;
+      const t = Math.floor(this.framesRecorded / this.frameRate * 10) / 10;
+      this.framesRecordedTarget.innerHTML = `${t} @ ${this.frameRate}`;
     }
   }
 }

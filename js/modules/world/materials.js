@@ -10,7 +10,6 @@ class Materials {
     this.mat = {};
     this.mat.default = new THREE.MeshPhysicalMaterial({emissive: 0, roughness: 1, envMapIntensity: 0.25});
     this.mat.porcelain = new THREE.MeshPhysicalMaterial({color: 0xffffff, emissive: 0x888888, emissiveIntensity: 0.6, roughness: 0.55, metalness: 0.125, envMapIntensity: 0.5});
-
     this.mat.metal = new THREE.MeshPhysicalMaterial({color: 0xa88e79, emissive: 0x0, roughness: 0.1, metalness: .9, envMapIntensity: 1.0, side: THREE.DoubleSide});
 
     const envMapSources = ['posx', 'negx', 'posy', 'negy', 'posz', 'negz'].map(filename => `${this.path}envmap/${filename}.jpg`);
@@ -39,10 +38,14 @@ class Materials {
     if (type === undefined || type == 1) {
       const mat = (inputMat === undefined) ? this.mat.metal.clone() : inputMat.clone();
       mat.onBeforeCompile = (shader) => {
-        shader.vertexShader = `uniform float time;\n${shader.vertexShader}`;
+        shader.vertexShader = `uniform float time;\n${customMat.perlinNoise}\n${shader.vertexShader}`;
         shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', customMat.metalMat);
         shader.uniforms.time = this.uniforms.time;
       };
+      mat.envMap = this.envMap;
+      mat.envMapIntensity = 0.5;
+      mat.metalness = 0.25;
+      mat.roughness = 0.25;
       return mat;
     } else if (type == 2) {
       const mat = customMat.normalMat.clone();
@@ -60,7 +63,7 @@ class Materials {
 
     // mat specific
     mat.envMap = this.envMap;
-    mat.envMapIntensity = 1.0;
+    mat.envMapIntensity = 0.5;
 
     switch (mat.name) {
       case 'concrete':
@@ -81,6 +84,10 @@ class Materials {
       default:
         break;
     }
+  }
+
+  reset() {
+    this.uniforms.time.value = 0;
   }
 
   update(delta) {
