@@ -38,6 +38,10 @@ body {
 	padding: $space;
 }
 
+#dev-reset {
+	cursor: pointer;
+}
+
 .canvas-wrapper {
 	width: 100%;
 	height: 100vh;

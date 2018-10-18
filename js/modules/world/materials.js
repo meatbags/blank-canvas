@@ -17,7 +17,6 @@ class Materials {
     this.normalMap = new THREE.TextureLoader().load(this.path + 'textures/noise.jpg');
     this.normalMap.wrapS = this.normalMap.wrapT = THREE.RepeatWrapping;
     this.normalMap.repeat.set(32, 32);
-
     //this.mat.metal.map = this.normalMap;
 
     // set envmaps
@@ -42,10 +41,10 @@ class Materials {
         shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', customMat.metalMat);
         shader.uniforms.time = this.uniforms.time;
       };
-      mat.envMap = this.envMap;
-      mat.envMapIntensity = 0.5;
-      mat.metalness = 0.25;
-      mat.roughness = 0.25;
+      //mat.envMap = this.envMap;
+      //mat.envMapIntensity = 0.125;
+      //mat.metalness = 0.25;
+      //mat.roughness = 0.25;
       return mat;
     } else if (type == 2) {
       const mat = customMat.normalMat.clone();

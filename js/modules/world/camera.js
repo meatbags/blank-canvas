@@ -7,6 +7,7 @@ class Camera {
     this.root = root;
     this.fov = 65;
     this.aspectRatio = this.root.width / this.root.height;
+    this.time = 0;
     this.useOrtho = true;
     if (this.useOrtho) {
       this.orthoHeight = 5;
@@ -15,16 +16,16 @@ class Camera {
       this.camera.position.set(20, 0, 0);
     } else {
       this.camera = new THREE.PerspectiveCamera(this.fov, this.aspectRatio, 0.1, 2000000);
-      this.camera.position.set(10, 0, 10);
+      this.camera.position.set(20, 0, 0);
+      this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
-    this.controls = new THREE.OrbitControls(this.camera, document.querySelector('#canvas-target'));
-    this.controls.enableKeys = true;
-    this.controls.enableDamping = true;
-    this.controls.update();
-  }
-
-  print() {
-    document.querySelector('#dev-camera').innerHTML = `Camera ${this.distance}`;
+    this.useControls = true;
+    if (this.useControls) {
+      this.controls = new THREE.OrbitControls(this.camera, document.querySelector('#canvas-target'));
+      this.controls.enableKeys = true;
+      this.controls.enableDamping = true;
+      this.controls.update();
+    }
   }
 
   resize(w, h) {
@@ -42,8 +43,17 @@ class Camera {
     }
   }
 
+  reset() {
+    this.time = 0;
+  }
+
   update(delta) {
-    this.controls.update();
+    this.time += delta;
+    if (this.useControls) {
+      this.controls.update();
+    } else {
+      this.camera.position.z = this.time * 5; // -100
+    }
   }
 }
 

@@ -16,35 +16,33 @@ class Map {
 
   loadScene() {
     this.group = new THREE.Group();
-    const customMat = (obj) => {
+
+    const wire = new THREE.MeshPhysicalMaterial({metalness: 1, color: 0x0, emissive: 0x00ff00, wireframe: true});
+    this.objects = [];
+
+    this.conformObject = (obj) => {
       if (obj.type === 'Mesh') {
+        //obj.material = wire;
         obj.material = this.materials.getCustomMaterial(1, obj.material);
-      } else if (obj.children && obj.children.length) {
-        obj.children.forEach(child => { conform(child); });
+        this.objects.push(obj);
+      } else if (obj.children) {
+        for (var i=0, lim=obj.children.length; i<lim; ++i) {
+          const child = obj.children[i];
+          this.conformObject(child);
+        }
       }
     };
 
-    const mesh = new THREE.Mesh(
-      new THREE.BoxBufferGeometry(10, 2, 25, 250, 1, 250),
-      new THREE.MeshPhysicalMaterial({color: 0xffffff})
-    );
-    customMat(mesh);
-    this.group.add(mesh);
-    this.scene.add(this.group);
-
     // load maps
-    /*
     this.loader.loadFBX('map').then((map) => {
-      this.group.add(map);
-      customMat(map);
-      this.scene.add(this.group);
+      this.conformObject(map);
+      this.objects.forEach(obj => { this.scene.add(obj); });
     }, (err) => { console.log(err); });
-    */
   }
 
   update(delta) {
     this.materials.update(delta);
-    //this.group.rotation.y += delta * Math.PI / 24;
+    //this.objects.forEach(obj => { obj.rotation.y += Math.PI / 48; });
   }
 }
 

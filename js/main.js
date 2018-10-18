@@ -9,7 +9,9 @@ class App {
     this.scene = new Scene();
     this.renderer = new Renderer(this.scene);
     this.recordButton = document.querySelector('#record');
-    this.frameRate = 48;
+    this.resetButton = document.querySelector('#dev-reset');
+    this.resetButton.onclick = () => { this.scene.reset(); };
+    this.frameRate = 24;
     this.framesRecordedTarget = document.querySelector('#frames');
     this.recordButton.onclick = () => { this.record(); };
     this.now = performance.now();

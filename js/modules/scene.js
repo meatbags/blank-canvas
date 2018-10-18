@@ -20,6 +20,7 @@ class Scene {
 
   reset() {
     this.map.materials.reset();
+    //this.camera.reset();
   }
 
   resize() {
