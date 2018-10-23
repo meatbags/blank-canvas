@@ -11,6 +11,7 @@ class Map {
     this.scene = root.scene;
     this.materials = new Materials('assets');
     this.loader = new Loader('assets');
+    this.age = 0;
     this.loadScene();
   }
 
@@ -38,6 +39,19 @@ class Map {
       this.conformObject(map);
       this.objects.forEach(obj => { this.scene.add(obj); });
     }, (err) => { console.log(err); });
+
+    // spikes
+    for (var x=-10; x<10; x+=2) {
+      for (var z=-10; z<10; z+=2) {
+        const mesh = new THREE.Mesh(
+          new THREE.CylinderBufferGeometry(0.25, 0.25, 6, 16),
+          new THREE.MeshPhysicalMaterial({color: 0x0})
+        );
+        this.conformObject(mesh);
+        mesh.position.set(x, 0, z);
+        this.scene.add(mesh);
+      }
+    }
   }
 
   update(delta) {

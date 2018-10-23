@@ -35,20 +35,23 @@ class Materials {
 
   getCustomMaterial(type, inputMat) {
     if (type === undefined || type == 1) {
-      const mat = (inputMat === undefined) ? this.mat.metal.clone() : inputMat.clone();
+      const mat = customMat.normalMat.clone();
+      mat.uniforms.time = this.uniforms.time;
+      return mat;
+    } else if (type == 2) {
+
+
+      //const mat = (inputMat === undefined) ? this.mat.metal.clone() : inputMat.clone();
+      const mat = this.mat.metal.clone();
       mat.onBeforeCompile = (shader) => {
         shader.vertexShader = `uniform float time;\n${customMat.perlinNoise}\n${shader.vertexShader}`;
         shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', customMat.metalMat);
         shader.uniforms.time = this.uniforms.time;
       };
-      //mat.envMap = this.envMap;
-      //mat.envMapIntensity = 0.125;
+      mat.envMap = this.envMap;
+      mat.envMapIntensity = 0.125;
       //mat.metalness = 0.25;
       //mat.roughness = 0.25;
-      return mat;
-    } else if (type == 2) {
-      const mat = customMat.normalMat.clone();
-      mat.uniforms.time = this.uniforms.time;
       return mat;
     } else {
       return null;

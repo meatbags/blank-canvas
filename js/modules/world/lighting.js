@@ -15,13 +15,12 @@ class Lighting {
     this.lights.point.a = new THREE.PointLight(0xffffff, 1.0, 20, 1);
     this.lights.point.a.position.y = 10;
 
-    /*
     const size = 15;
     const n = 5;
     for (var i=0; i<n; i++) {
       const key = `L${i}`;
-      //const colour = Math.random() > 0.66 ? 0xff0000 : Math.random() > 0.5 ? 0x00ff00 : 0x0000ff;
-      const colour = 0x222222;
+      const colour = Math.random() > 0.66 ? 0xff0000 : Math.random() > 0.5 ? 0x00ff00 : 0x0000ff;
+      //const colour = 0x222222;
       const light = new THREE.PointLight(colour, 1, size * 2, 2);
       const x = Math.random() * size - size * 0.5;
       const y = 1 + Math.random() * size;
@@ -29,7 +28,6 @@ class Lighting {
       light.position.set(x, y, z);
       this.lights.point[key] = light;
     }
-    */
 
     // add to scene
     Object.keys(this.lights).forEach(type => {
