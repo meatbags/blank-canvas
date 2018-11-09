@@ -19,6 +19,7 @@ class Scene {
   }
 
   reset() {
+    this.map.reset();
     this.map.materials.reset();
     //this.camera.reset();
   }

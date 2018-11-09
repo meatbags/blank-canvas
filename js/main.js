@@ -2,25 +2,41 @@
  * App entry point.
  **/
 
-import { Scene, Renderer } from './modules';
+import { Scene, Renderer, Scene2d } from './modules';
 
 class App {
   constructor() {
+    // 3d canvas
     this.scene = new Scene();
     this.renderer = new Renderer(this.scene);
+
+    // 2d canvas
+    this.scene2d = new Scene2d();
+
+    // set recording target
+    this.recordingTargetCanvas = this.scene2d.cvs;
+    //this.renderer.renderer.domElement
+
+    // recording interface
     this.recordButton = document.querySelector('#record');
     this.resetButton = document.querySelector('#dev-reset');
     this.resetButton.onclick = () => { this.scene.reset(); };
-    this.frameRate = 48;
+    this.frameRate = 60;
     this.framesRecordedTarget = document.querySelector('#frames');
     this.recordButton.onclick = () => { this.record(); };
+
+    // run
     this.now = performance.now();
     this.loop();
   }
 
   record() {
     if (!this.recordButton.classList.contains('active')) {
+      // reset scenes
       this.scene.reset();
+      this.scene2d.reset();
+
+      // set recording flags
       this.framesRecorded = 0;
       this.capturer = new CCapture({framerate: this.frameRate, format: 'png'}); //verbose: true, motionBlurFrames: true
       this.capturer.start();
@@ -37,19 +53,23 @@ class App {
   loop() {
     requestAnimationFrame(() => { this.loop(); });
 
-    // render
+    // render 3d
     const t = performance.now();
     const delta = (t - this.now) / 1000;
     this.now = t;
     this.scene.update(delta);
     this.renderer.draw(delta);
 
+    // render 2d
+    this.scene2d.update(delta);
+    this.scene2d.draw(delta);
+
     // record video
     if (this.recording) {
-      this.capturer.capture(this.renderer.renderer.domElement);
+      this.capturer.capture(this.recordingTargetCanvas);
       this.framesRecorded += 1;
       const t = Math.floor(this.framesRecorded / this.frameRate * 10) / 10;
-      this.framesRecordedTarget.innerHTML = `${t} @ ${this.frameRate}`;
+      this.framesRecordedTarget.innerHTML = `${t} @ ${this.frameRate}fps`;
     }
   }
 }

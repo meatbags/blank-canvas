@@ -34,13 +34,16 @@ class Materials {
   }
 
   getCustomMaterial(type, inputMat) {
+    const mat = customMat.wireMat.clone();
+    mat.extensions.derivatives = true;
+    mat.side = THREE.DoubleSide;
+    return mat;
+    /*
     if (type === undefined || type == 1) {
       const mat = customMat.normalMat.clone();
       mat.uniforms.time = this.uniforms.time;
       return mat;
     } else if (type == 2) {
-
-
       //const mat = (inputMat === undefined) ? this.mat.metal.clone() : inputMat.clone();
       const mat = this.mat.metal.clone();
       mat.onBeforeCompile = (shader) => {
@@ -56,6 +59,7 @@ class Materials {
     } else {
       return null;
     }
+    */
   }
 
   conform(mat) {
