@@ -8,8 +8,8 @@ class Scene2d {
   constructor() {
     this.cvs = document.createElement('canvas');
     this.ctx = this.cvs.getContext('2d');
-    this.cvs.width = 400;
-    this.cvs.height = 300;
+    this.cvs.width = 200;
+    this.cvs.height = 200;
     this.cvs.style.background = 'black';
     this.cvs.style.bottom = 0;
     this.cvs.style.right = 0;
@@ -21,7 +21,7 @@ class Scene2d {
 
   reset() {
     this.nodes = [];
-    for (var i=0, lim=50; i<lim; ++i) {
+    for (var i=0, lim=100; i<lim; ++i) {
       this.nodes.push(new Node2d(this));
     }
   }
@@ -34,7 +34,10 @@ class Scene2d {
 
   draw(delta) {
     this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
-    this.ctx.fillStyle = '#fff';
+    this.ctx.fillStyle = this.ctx.strokeStyle = '#fff';
+    this.ctx.lineWidth = 4;
+    this.ctx.setLineDash([4, 8]);
+    //this.ctx.globalCompositeOperation = 'xor';
     this.nodes.forEach(node => {
       node.draw(this.ctx);
     });

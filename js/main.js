@@ -14,8 +14,7 @@ class App {
     this.scene2d = new Scene2d();
 
     // set recording target
-    this.recordingTargetCanvas = this.scene2d.cvs;
-    //this.renderer.renderer.domElement
+    this.recordingTargetCanvas = this.renderer.renderer.domElement;//this.scene2d.cvs;
 
     // recording interface
     this.recordButton = document.querySelector('#record');
@@ -24,7 +23,7 @@ class App {
     this.frameRate = 60;
     this.framesRecordedTarget = document.querySelector('#frames');
     this.recordButton.onclick = () => { this.record(); };
-
+    
     // run
     this.now = performance.now();
     this.loop();
@@ -61,8 +60,8 @@ class App {
     this.renderer.draw(delta);
 
     // render 2d
-    this.scene2d.update(delta);
-    this.scene2d.draw(delta);
+    //this.scene2d.update(delta);
+    //this.scene2d.draw(delta);
 
     // record video
     if (this.recording) {
