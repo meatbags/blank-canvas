@@ -23,7 +23,7 @@ class App {
     this.frameRate = 60;
     this.framesRecordedTarget = document.querySelector('#frames');
     this.recordButton.onclick = () => { this.record(); };
-    
+
     // run
     this.now = performance.now();
     this.loop();
@@ -31,6 +31,9 @@ class App {
 
   record() {
     if (!this.recordButton.classList.contains('active')) {
+      // seed scene
+      Math.seedrandom(0x1337);
+
       // reset scenes
       this.scene.reset();
       this.scene2d.reset();

@@ -8,7 +8,7 @@ class Chess {
   constructor(root) {
     this.root = root;
     this.moves = 0;
-    this.movesToReset = 128;
+    this.movesToReset = 64;
     this.turn = 'white';
     this.board = new Array(64);
     this.pieces = [];
@@ -66,6 +66,7 @@ class Chess {
 
   reset(rotation) {
     this.moves = 0;
+    this.age = 0;
     this.turn = 'white';
 
     // cache all remaining pieces
@@ -91,9 +92,7 @@ class Chess {
   }
 
   update(delta) {
-    this.age += delta;
-
-    if (this.age > this.threshold) {
+    if (this.age > 0 && this.age % 3 == 0) {
       const canMove = [];
       this.board.forEach(p => {
         if (p != undefined && p.colour == this.turn && p.canMove()) {
@@ -109,7 +108,6 @@ class Chess {
 
       // toggle
       this.turn = this.turn == 'white' ? 'black' : 'white';
-      this.age -= this.threshold;
 
       // reset
       this.moves += 1;
@@ -123,6 +121,7 @@ class Chess {
 
     // animate board
     this.group.rotation.y += delta * Math.PI / 8;
+    this.age += 1;
   }
 }
 
