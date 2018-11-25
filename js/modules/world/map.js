@@ -14,6 +14,7 @@ class Map {
     this.loader = new Loader('assets');
     //this.chess = new Chess(this);
     this.age = 0;
+    this.tick = 0;
     this.loadScene();
   }
 
@@ -21,29 +22,45 @@ class Map {
     this.group = new THREE.Group();
     this.objects = [];
 
-    this.loader.loadFBX('hand').then((map) => {
+    this.loader.loadFBX('ring').then((map) => {
       this.materials.applyMaterial(map);
-      this.objects.forEach(obj => { this.scene.add(obj); });
+      this.objects.forEach(obj => {
+        obj.material.side = THREE.DoubleSide;
+        this.scene.add(obj);
+      });
     }, (err) => { console.log(err); });
+
     // load map
     /*
-    this.loader.loadFBX('map').then((map) => {
+    this.loader.loadFBX('chess').then((map) => {
       this.materials.applyMaterial(map);
       this.chess.init(map);
-      //this.objects.forEach(obj => { this.scene.add(obj); });
     }, (err) => { console.log(err); });
     */
   }
 
   reset() {
-    //this.objects.forEach(obj => { obj.rotation.set(0, 0, 0); });
-    //this.chess.reset(true);
+    this.tick = 0;
+    this.age = 0;
+    this.objects.forEach(obj => { obj.rotation.set(0, 0, 0); });
+    if (this.chess) {
+      this.chess.reset(true);
+    }
   }
 
   update(delta) {
-    //this.chess.update(delta);
+    if (this.chess) {
+      this.chess.update(delta);
+    }
     this.materials.update(delta);
-    this.objects.forEach(obj => { obj.rotation.y += delta * Math.PI / 4; });
+    this.objects.forEach(obj => {
+      obj.rotation.x = (this.tick / 48) * Math.PI;
+      //obj.rotation.z = Math.sin(this.age / 2 * Math.PI * 2) * Math.PI / 7;
+      //obj.position.y = -15 + (this.age * 6 % 50);
+      //obj.rotation.y += Math.PI * delta;
+    });
+    this.tick += 1;
+    this.age += delta;
   }
 }
 

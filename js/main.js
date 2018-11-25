@@ -14,7 +14,8 @@ class App {
     this.scene2d = new Scene2d();
 
     // set recording target
-    this.recordingTargetCanvas = this.renderer.renderer.domElement;//this.scene2d.cvs;
+    this.recordingTargetCanvas = this.renderer.renderer.domElement;
+    //this.recordingTargetCanvas = this.scene2d.cvs;
 
     // recording interface
     this.recordButton = document.querySelector('#record');

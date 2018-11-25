@@ -111,7 +111,10 @@ class Materials {
 
     // mat specific
     mat.envMap = this.envMap;
-    mat.envMapIntensity = 0.5;
+    mat.envMapIntensity = 1;
+
+    // clipping
+    //mat.side = THREE.DoubleSide;
 
     switch (mat.name) {
       case 'chess':

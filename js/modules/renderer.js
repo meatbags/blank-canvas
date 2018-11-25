@@ -14,6 +14,11 @@ class Renderer {
     this.renderer.gammaOutput = true;
     this.setSize();
 
+    //this.renderer.localClippingEnabled = true;
+    this.renderer.clippingPlanes = [
+      new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)
+    ];
+
     // render passes
     const strength = 0.5;
     const radius = 0.125;

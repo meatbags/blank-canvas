@@ -10,10 +10,11 @@ class Camera {
     this.time = 0;
     this.useOrtho = true;
     if (this.useOrtho) {
-      this.orthoHeight = 8;
+      this.orthoHeight = 5;
       this.orthoWidth = this.orthoHeight * this.aspectRatio;
       this.camera = new THREE.OrthographicCamera(-this.orthoWidth, this.orthoWidth, this.orthoHeight, -this.orthoHeight, 0.1, 1000);
-      this.camera.position.set(10, -8.125, 10); //8.125
+      this.camera.position.set(-10, -8.125, -10);
+      //this.camera.position.set(0, 0, 10);
     } else {
       this.camera = new THREE.PerspectiveCamera(this.fov, this.aspectRatio, 0.1, 2000000);
       this.camera.position.set(20, 0, 0);
@@ -49,10 +50,12 @@ class Camera {
 
   update(delta) {
     this.time += delta;
+    //this.camera.position.set(10, Math.sin(this.time * Math.PI * 0.25) * 8.125 * 2, 10);
+
     if (this.useControls) {
       this.controls.update();
     } else {
-      this.camera.position.z = this.time * 5;
+      //this.camera.position.z = this.time * 5;
     }
   }
 }

@@ -36,7 +36,7 @@ class Scene2d {
     this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
     this.ctx.fillStyle = this.ctx.strokeStyle = '#fff';
     this.ctx.lineWidth = 4;
-    this.ctx.setLineDash([4, 8]);
+    //this.ctx.setLineDash([4, 8]);
     //this.ctx.globalCompositeOperation = 'xor';
     this.nodes.forEach(node => {
       node.draw(this.ctx);
